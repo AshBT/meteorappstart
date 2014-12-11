@@ -1,0 +1,49 @@
+notes:
+
+- partials are places in the code - identified with a '>' character which tell Meteor where to put the template
+-- ie. {{> templateName}}
+
+expressions are places where the handlebars object will put in the value
+-- ie.  {{title}}
+-- this will take the object, find the title key and put it into that place
+
+block helpers are tags which control the flow of the code
+-- ie. {{#each}} {{#if}}... etc
+
+Template Managers:
+Take the form of Template.<name of the template>.helpers({
+    <objectNameToBeReferencedInTheHTML>:templateDataObjectName
+});
+
+
+autopublish (a meteor plugin), calls the database automatically for you, returning all of the results in a collection
+- it is not intended for production use.. (you'd send the entire database)
+
+Therefore you have to put a publish.js file on the server to publish the appropriate files from the database.  Accordingly, on the client you have to call a Meteor.subscribe function which enables you to get the object from the publish function
+
+<Collection>.allow()
+- enables clients to write given the certain conditions specified
+
+
+Process:
+
+Collections:
+- define a Collection in a .js file on the Client which identifies what is going to be brought into a given template
+-- define methods on the Collection to insert, update and delete items from it
+
+Build a Template in a separate named file --> template_name.html:
+<template name=[template_name]>
+    {{processing stuff using block helpers}}
+    {{# each [object_name]}}
+</template>
+
+Define where the template will be injected in to the VIEW
+    - inject the {{> [template_name] }} into the HTML where the information will go
+
+Build a template manager:
+    Take the form of Template.<name of the template>.helpers({
+        <objectName(ToBeReferencedInTheHTML)>:templateDataObject
+    });
+The templateDataObject is usually retrieved via a call to the Database, and returns an object or an array of values to be laid out in the template
+
+every time you make a template, make an according Template.helpers... helper in the matching .js file
